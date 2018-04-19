@@ -1,18 +1,31 @@
-{% set version = "2.4.6" %}
-{% set sha256 = "2d502e23a0c18f8f7f7d92278fc11931971443154e4b087c88540466efd93a8a" %}
+{% set version = "2.5.0-rc1" %}
+{% set sha256 = "6535b3d3e9cfa492176660f80bcab76a6fb703f59bee578dc62f7b9793b9e467" %}
 
 package:
   name: singularity
-  version: {{ version }}
+  version: {{ version.replace("-", ".") }}
 
 source:
   fn: singularity-{{ version }}.tar.gz
-  url: https://github.com/singularityware/singularity/releases/download/{{ version }}/singularity-{{ version }}.tar.gz
+  url: https://github.com/singularityware/singularity/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
   number: 0
   skip: true  # [not linux]
+
+requirements:
+  build:
+    - toolchain
+    - autoconf
+    - automake
+    - libtool
+    - m4
+    - pkg-config
+    - libarchive 3.3.2
+
+  run:
+    - libarchive 3.3.2
 
 test:
   commands:
